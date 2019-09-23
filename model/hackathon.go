@@ -22,11 +22,17 @@ func (dsd *WeeHackDB) CreateHackathon(hackathon *Hackathon) error {
 //GetScouts: retorna um hackathon
 func (dsd *WeeHackDB) GetHackathon(id int) (*Hackathon, error) {
 	hackathon := Hackathon{}
-	result := dsd.Db.Table("public.hackathon").Preload("Users").First(&hackathon, "id = ?", id)
+	users := []User{}
+
+	result := dsd.Db.Table("public.hackathon").First(&hackathon, "id = ?", id)
 
 	if result.Error != nil {
 		log.Println("error on get data from hackathon", result.Error)
 		return nil, result.Error
+	} else {
+
+		dsd.Db.Model(&hackathon).Related(&users, "Users")
+		hackathon.Users = users
 	}
 	return &hackathon, nil
 }
@@ -34,6 +40,7 @@ func (dsd *WeeHackDB) GetHackathon(id int) (*Hackathon, error) {
 //GetUsers: retorna todos os hackathon
 func (dsd *WeeHackDB) GetAllHackathons() (*[]Hackathon, error) {
 	hackathons := []Hackathon{}
+
 	result := dsd.Db.Table("public.hackathon").Preload("Users").Find(&hackathons)
 
 	log.Println(result)
