@@ -3,10 +3,9 @@ package model
 import "log"
 
 type HackathonUser struct {
-	ID          int64  `gorm:"column:id;primary_key:true" json:"id,omitempty"`
-	State       string `gorm:"column:hackathon_state" json:"hackathonState,omitempty"`
-	HackathonID int64  `gorm:"column:hackathon_id" json:"hackathonId,omitempty"`
-	UserID      int64  `gorm:"column:user_id" json:"userId,omitempty"`
+	ID          int64 `gorm:"column:id;primary_key:true" json:"id,omitempty"`
+	HackathonID int64 `gorm:"column:hackathon_id" json:"hackathonId,omitempty"`
+	UserID      int64 `gorm:"column:user_id" json:"userId,omitempty"`
 }
 
 //CreateHackathonUser: criar associação de hackathon e hackathoner
