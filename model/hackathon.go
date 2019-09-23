@@ -35,6 +35,9 @@ func (dsd *WeeHackDB) GetHackathon(id int) (*Hackathon, error) {
 func (dsd *WeeHackDB) GetAllHackathons() (*[]Hackathon, error) {
 	hackathons := []Hackathon{}
 	result := dsd.Db.Table("public.hackathon").Preload("Users").Find(&hackathons)
+
+	log.Println(result)
+
 	if result.Error != nil {
 		log.Println("error on get data from hackathon", result.Error)
 		return nil, result.Error
