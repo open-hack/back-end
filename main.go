@@ -81,7 +81,7 @@ func main() {
 	go chatHandler.HandleMessages()
 
 	log.Println("http server started on " + os.Getenv("PORT"))
-	log.Println("database started on " + os.Getenv("DATABASE_URL"))
+	log.Println("database started on " + model.Database.URL)
 	log.Println("bonsai started on " + os.Getenv("BONSAI_URL"))
 
 	error := http.ListenAndServe(":"+os.Getenv("PORT"), nil)

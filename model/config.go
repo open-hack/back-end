@@ -24,7 +24,7 @@ type WeeHackDB struct {
 //Inicialização do repository
 func (dsd *WeeHackDB) MustInit() {
 	var err error
-	dsd.Db, err = gorm.Open("postgres", connection())
+	dsd.Db, err = gorm.Open("postgres", Database.URL)
 	if err != nil {
 		log.Println("error on connect database")
 		return
