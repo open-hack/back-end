@@ -3,16 +3,16 @@ package model
 import "log"
 
 type Hackathon struct {
-	ID         int64  `gorm:"primary_key" json:"id,omitempty"`
-	Image      []byte `gorm:"column:image" json:"image,omitempty"`
-	Title      string `gorm:"column:title" json:"title,omitempty"`
-	Onboarding string `gorm:"column:onboarding" json:"onboarding,omitempty"`
-	User       []User `gorm:"many2many:hackathon_user;association_autocreate:false" json:"users,omitempty"`
+	ID         int64   `gorm:"primary_key" json:"id,omitempty"`
+	Image      []byte  `gorm:"column:image" json:"image,omitempty"`
+	Title      string  `gorm:"column:title" json:"title,omitempty"`
+	Onboarding string  `gorm:"column:onboarding" json:"onboarding,omitempty"`
+	Users      []*User `gorm:"many2many:hackathon_user;" json:"users,omitempty"`
 }
 
 //CreateHackathon: criar um hackathon
 func (dsd *WeeHackDB) CreateHackathon(hackathon *Hackathon) error {
-	result := dsd.Db.Table("public.hackathon").Create(hackathon)
+	result := dsd.Db.Table("public.hackathons").Create(hackathon)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -22,18 +22,12 @@ func (dsd *WeeHackDB) CreateHackathon(hackathon *Hackathon) error {
 //GetScouts: retorna um hackathon
 func (dsd *WeeHackDB) GetHackathon(id int) (*Hackathon, error) {
 	hackathon := Hackathon{}
-	users := []User{}
 
-	result := dsd.Db.Table("public.hackathon").First(&hackathon, "id = ?", id)
+	result := dsd.Db.Table("public.hackathons").Preload("Users").First(&hackathon, "id = ?", id)
 
 	if result.Error != nil {
 		log.Println("error on get data from hackathon", result.Error)
 		return nil, result.Error
-	} else {
-
-		dsd.Db.Model(&hackathon).Related(&users, "User")
-		log.Println(users)
-		hackathon.User = users
 	}
 	return &hackathon, nil
 }
@@ -42,7 +36,7 @@ func (dsd *WeeHackDB) GetHackathon(id int) (*Hackathon, error) {
 func (dsd *WeeHackDB) GetAllHackathons() (*[]Hackathon, error) {
 	hackathons := []Hackathon{}
 
-	result := dsd.Db.Table("public.hackathon").Preload("User").Find(&hackathons)
+	result := dsd.Db.Table("public.hackathons").Preload("Users").Find(&hackathons)
 
 	log.Println(result)
 
