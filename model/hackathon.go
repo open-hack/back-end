@@ -32,6 +32,7 @@ func (dsd *WeeHackDB) GetHackathon(id int) (*Hackathon, error) {
 	} else {
 
 		dsd.Db.Model(&hackathon).Related(&users, "Users")
+		log.Println(users)
 		hackathon.Users = users
 	}
 	return &hackathon, nil
