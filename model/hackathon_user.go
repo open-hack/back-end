@@ -26,7 +26,6 @@ func (dsd *WeeHackDB) CreateByUserID(userID int64, hackathonIDs []int64) error {
 		hackathonUser := &HackathonUser{
 			HackathonID: hackathonID,
 			UserID:      userID,
-			State:       "Open",
 		}
 
 		dsd.CreateHackathonUser(hackathonUser)
@@ -42,7 +41,6 @@ func (dsd *WeeHackDB) CreateByHackathonID(hackathonID int64, userIDs []int64) er
 		hackathonUser := &HackathonUser{
 			HackathonID: hackathonID,
 			UserID:      userID,
-			State:       "Open",
 		}
 
 		dsd.CreateHackathonUser(hackathonUser)
