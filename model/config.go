@@ -1,7 +1,6 @@
 package model
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/jinzhu/gorm"
@@ -34,8 +33,5 @@ func (dsd *WeeHackDB) MustInit() {
 
 //Helper para formatar string de conexão
 func connection() string {
-	return fmt.Sprintf(
-		"%s?sslmode=require",
-		Database.URL,
-	)
+	return Database.URL
 }
