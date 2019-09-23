@@ -7,7 +7,7 @@ type Hackathon struct {
 	Image      []byte `gorm:"column:image" json:"image,omitempty"`
 	Title      string `gorm:"column:title" json:"title,omitempty"`
 	Onboarding string `gorm:"column:onboarding" json:"onboarding,omitempty"`
-	Users      []User `gorm:"many2many:hackathon_user;association_autocreate:false" json:"users,omitempty"`
+	User       []User `gorm:"many2many:hackathon_user;association_autocreate:false" json:"users,omitempty"`
 }
 
 //CreateHackathon: criar um hackathon
@@ -33,7 +33,7 @@ func (dsd *WeeHackDB) GetHackathon(id int) (*Hackathon, error) {
 
 		dsd.Db.Model(&hackathon).Related(&users, "User")
 		log.Println(users)
-		hackathon.Users = users
+		hackathon.User = users
 	}
 	return &hackathon, nil
 }
