@@ -2,19 +2,10 @@ package model
 
 import (
 	"log"
+	"os"
 
 	"github.com/jinzhu/gorm"
 )
-
-type Config struct {
-	ElasticSearchUrl string `env:"BONSAI_URL"`
-}
-
-//Configuração de banco de dados, host,senha etc..
-// Dados de produção são carregados via variaveis de ambiente (:
-var Database struct {
-	URL string `env:"DATABASE_URL"`
-}
 
 // Modelo de acesso ao banco
 type WeeHackDB struct {
@@ -24,7 +15,7 @@ type WeeHackDB struct {
 //Inicialização do repository
 func (dsd *WeeHackDB) MustInit() {
 	var err error
-	dsd.Db, err = gorm.Open("postgres", Database.URL)
+	dsd.Db, err = gorm.Open("postgres", connection())
 	if err != nil {
 		log.Println("error on connect database")
 		return
@@ -33,5 +24,9 @@ func (dsd *WeeHackDB) MustInit() {
 
 //Helper para formatar string de conexão
 func connection() string {
-	return Database.URL
+	return os.Getenv("DATABASE_URL")
+}
+
+func elasticSearch() string {
+	return os.Getenv("BONSAI_URL")
 }
