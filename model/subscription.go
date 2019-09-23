@@ -3,7 +3,7 @@ package model
 import "log"
 
 type Subscription struct {
-	ID                 int64 `gorm:"column:id" json:"id,omitempty"`
+	ID                 int64 `gorm:"column:id;primary_key:true" json:"id,omitempty"`
 	User               User
 	CPF                string `gorm:"column:cpf" json:"cpf,omitempty"`
 	RG                 string `gorm:"column:rg" json:"rg,omitempty"`
