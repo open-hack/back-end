@@ -15,7 +15,7 @@ type WeeHackDB struct {
 //Inicialização do repository
 func (dsd *WeeHackDB) MustInit() {
 	var err error
-	dsd.Db, err = gorm.Open("postgres", connection())
+	dsd.Db, err = gorm.Open("postgres", Connection())
 	if err != nil {
 		log.Println("error on connect database")
 		return
@@ -23,10 +23,10 @@ func (dsd *WeeHackDB) MustInit() {
 }
 
 //Helper para formatar string de conexão
-func connection() string {
+func Connection() string {
 	return os.Getenv("DATABASE_URL")
 }
 
-func elasticSearch() string {
+func ElasticSearch() string {
 	return os.Getenv("BONSAI_URL")
 }

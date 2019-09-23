@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/caarlos0/env"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 	"github.com/joho/godotenv"
@@ -27,12 +26,7 @@ func main() {
 		log.Println("File .env not found, reading configuration from ENV")
 	}
 
-	var cfg model.Config
-	if err := env.Parse(&cfg); err != nil {
-		log.Fatalln("Failed to parse ENV")
-	}
-
-	elasticClient, err := elastic.NewClient(elastic.SetURL(cfg.ElasticSearchUrl), elastic.SetSniff(false))
+	elasticClient, err := elastic.NewClient(elastic.SetURL(model.ElasticSearch()), elastic.SetSniff(false))
 	if err != nil {
 		log.Fatal("Error Creating Elastic Client: ", err)
 	}
@@ -81,8 +75,8 @@ func main() {
 	go chatHandler.HandleMessages()
 
 	log.Println("http server started on " + os.Getenv("PORT"))
-	log.Println("database started on " + model.Database.URL)
-	log.Println("bonsai started on " + os.Getenv("BONSAI_URL"))
+	log.Println("database started on " + model.Connection())
+	log.Println("bonsai started on " + model.ElasticSearch())
 
 	error := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 	if error != nil {
