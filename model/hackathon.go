@@ -7,7 +7,7 @@ type Hackathon struct {
 	Image      []byte  `gorm:"column:image" json:"image,omitempty"`
 	Title      string  `gorm:"column:title" json:"title,omitempty"`
 	Onboarding string  `gorm:"column:onboarding" json:"onboarding,omitempty"`
-	Users      []*User `gorm:"many2many:hackathon_user;association_foreignkey:user_id;foreignkey:hackathon_id"`
+	Users      []*User `gorm:"many2many:hackathon_user;"`
 }
 
 //CreateHackathon: criar um hackathon
