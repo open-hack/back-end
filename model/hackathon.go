@@ -3,11 +3,11 @@ package model
 import "log"
 
 type Hackathon struct {
-	ID         int64   `gorm:"column:id" json:"id,omitempty"`
+	ID         int64   `gorm:"column:id;primary_key:true" json:"id,omitempty"`
 	Image      []byte  `gorm:"column:image" json:"image,omitempty"`
 	Title      string  `gorm:"column:title" json:"title,omitempty"`
 	Onboarding string  `gorm:"column:onboarding" json:"onboarding,omitempty"`
-	Users      []*User `gorm:"many2many:hackathon_user;association_jointable_foreignkey:user_id" json:"users,omitempty"`
+	Users      []*User `gorm:"many2many:hackathon_user;association_foreignkey:user_id;foreignkey:hackathon_id"`
 }
 
 //CreateHackathon: criar um hackathon

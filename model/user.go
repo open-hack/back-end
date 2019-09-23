@@ -10,7 +10,7 @@ import (
 
 type User struct {
 	gorm.Model
-	ID           int64        `gorm:"column:id" json:"id,omitempty"`
+	ID           int64        `gorm:"column:id;primary_key:true" json:"id,omitempty"`
 	ProfileImage []byte       `gorm:"column:profile_image" json:"profileImage,omitempty"`
 	Username     string       `gorm:"column:username" json:"username,omitempty"`
 	Name         string       `gorm:"column:name" json:"name,omitempty"`
@@ -27,7 +27,7 @@ type User struct {
 	Profile      string       `gorm:"column:profile" json:"profile,omitempty"`
 	CreatedOn    time.Time    `gorm:"column:created_on" json:"created_on,omitempty"`
 	LastLogin    time.Time    `gorm:"column:last_login" json:"lastLogin,omitempty"`
-	Hackathons   []*Hackathon `gorm:"many2many:hackathon_user;association_jointable_foreignkey:hackathon_id" json:"hackathons,omitempty"`
+	Hackathons   []*Hackathon `gorm:"many2many:hackathon_user;association_foreignkey:hackathon_id;foreignkey:user_id"`
 }
 
 //CreateUser: criar um usuário
