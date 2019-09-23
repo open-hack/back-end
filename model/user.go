@@ -27,7 +27,7 @@ type User struct {
 	Profile      string       `gorm:"column:profile" json:"profile,omitempty"`
 	CreatedOn    time.Time    `gorm:"column:created_on" json:"created_on,omitempty"`
 	LastLogin    time.Time    `gorm:"column:last_login" json:"lastLogin,omitempty"`
-	Hackathons   []*Hackathon `gorm:"many2many:hackathon_user;"`
+	Hackathons   []*Hackathon `gorm:"many2many:hackathon_user;ForeignKey:id;AssociationForeignKey:id"`
 }
 
 //CreateUser: criar um usuário
