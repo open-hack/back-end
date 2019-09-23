@@ -1,13 +1,13 @@
 package handler
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
-	"encoding/json"
 
 	"github.com/gorilla/websocket"
-	"github.com/grupo8hackglobo2019/back-end/service"
-	"github.com/grupo8hackglobo2019/back-end/model"
+	"github.com/open-hack/back-end/model"
+	"github.com/open-hack/back-end/service"
 )
 
 var clients = make(map[*websocket.Conn]bool)
@@ -15,7 +15,7 @@ var broadcast = make(chan model.Message)
 
 type Handler struct {
 	Upgrader websocket.Upgrader
-	Service *service.ElasticService
+	Service  *service.ElasticService
 }
 
 func (h *Handler) SendViaPost(w http.ResponseWriter, r *http.Request) {
@@ -39,8 +39,8 @@ func (h *Handler) SendViaPost(w http.ResponseWriter, r *http.Request) {
 
 		error := h.Service.SaveToElastic(ctx, payload)
 		if error != nil {
-				log.Printf("error saving to ES: %v", error)
-				return
+			log.Printf("error saving to ES: %v", error)
+			return
 		}
 
 	} else {
@@ -49,12 +49,12 @@ func (h *Handler) SendViaPost(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) HandleConnections(w http.ResponseWriter, r *http.Request) {
-	
+
 	ws, err := h.Upgrader.Upgrade(w, r, nil)
 	if err != nil {
-			log.Fatal(err)
+		log.Fatal(err)
 	}
-	
+
 	defer ws.Close()
 
 	clients[ws] = true
@@ -65,9 +65,9 @@ func (h *Handler) HandleConnections(w http.ResponseWriter, r *http.Request) {
 
 		err := ws.ReadJSON(&msg)
 		if err != nil {
-				log.Printf("error reading json: %v", err)
-				delete(clients, ws)
-				return
+			log.Printf("error reading json: %v", err)
+			delete(clients, ws)
+			return
 		}
 
 		log.Printf("payload reading: %v", msg)
@@ -75,9 +75,9 @@ func (h *Handler) HandleConnections(w http.ResponseWriter, r *http.Request) {
 
 		error := h.Service.SaveToElastic(ctx, msg)
 		if error != nil {
-				log.Printf("error saving to ES: %v", error)
-				delete(clients, ws)
-				return
+			log.Printf("error saving to ES: %v", error)
+			delete(clients, ws)
+			return
 		}
 
 	}
@@ -86,17 +86,17 @@ func (h *Handler) HandleConnections(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) HandleMessages() {
 	for {
-			
-		msg := <- broadcast
-		
+
+		msg := <-broadcast
+
 		for client := range clients {
-				err := client.WriteJSON(msg)
-				log.Printf("payload writting: %v", msg)
-				if err != nil {
-						log.Printf("error: %v", err)
-						client.Close()
-						delete(clients, client)
-				}
+			err := client.WriteJSON(msg)
+			log.Printf("payload writting: %v", msg)
+			if err != nil {
+				log.Printf("error: %v", err)
+				client.Close()
+				delete(clients, client)
+			}
 		}
 	}
 }

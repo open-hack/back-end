@@ -1,17 +1,17 @@
 package service
 
-import(
+import (
 	"context"
 	"errors"
-	
+
+	"github.com/open-hack/back-end/model"
 	"gopkg.in/olivere/elastic.v6"
-	"github.com/grupo8hackglobo2019/back-end/model"
 )
 
-const(
-	indexName    = "chat"
-	docType      = "log"
-	appName      = "back-end"
+const (
+	indexName = "chat"
+	docType   = "log"
+	appName   = "back-end"
 )
 
 type ElasticService struct {
@@ -35,15 +35,15 @@ func (e *ElasticService) SaveToElastic(ctx context.Context, payload model.Messag
 		}
 	}
 
-	var user = model.User {
-		Name: payload.User.Name,
-		Avatar: payload.User.Avatar,
+	var user = model.User{
+		Name:         payload.User.Name,
+		ProfileImage: payload.User.ProfileImage,
 	}
 
-	var message = model.Message {
-		Text: payload.Text,
+	var message = model.Message{
+		Text:      payload.Text,
 		CreatedAt: payload.CreatedAt,
-		User: user,
+		User:      user,
 	}
 
 	_, error := e.ElasticCLI.Index().
