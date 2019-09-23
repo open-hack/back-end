@@ -3,7 +3,7 @@ package model
 import "log"
 
 type Hackathon struct {
-	ID         int64   `gorm:"column:hackathon_id" json:"id,omitempty"`
+	ID         int64   `gorm:"column:id" json:"id,omitempty"`
 	Image      []byte  `gorm:"column:image" json:"image,omitempty"`
 	Title      string  `gorm:"column:title" json:"title,omitempty"`
 	Onboarding string  `gorm:"column:onboarding" json:"onboarding,omitempty"`
@@ -22,7 +22,7 @@ func (dsd *WeeHackDB) CreateHackathon(hackathon *Hackathon) error {
 //GetScouts: retorna um hackathon
 func (dsd *WeeHackDB) GetHackathon(id int) (*Hackathon, error) {
 	hackathon := Hackathon{}
-	result := dsd.Db.Table("public.hackathon").Preload("Users").First(&hackathon, "hackathon_id = ?", id)
+	result := dsd.Db.Table("public.hackathon").Preload("Users").First(&hackathon, "id = ?", id)
 
 	if result.Error != nil {
 		log.Println("error on get data from hackathon", result.Error)

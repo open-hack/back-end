@@ -10,7 +10,7 @@ import (
 
 type User struct {
 	gorm.Model
-	ID           int64        `gorm:"column:user_id" json:"id,omitempty"`
+	ID           int64        `gorm:"column:id" json:"id,omitempty"`
 	ProfileImage []byte       `gorm:"column:profile_image" json:"profileImage,omitempty"`
 	Username     string       `gorm:"column:username" json:"username,omitempty"`
 	Name         string       `gorm:"column:name" json:"name,omitempty"`
@@ -43,7 +43,7 @@ func (dsd *WeeHackDB) CreateUser(user *User) error {
 func (dsd *WeeHackDB) GetUser(id int) (*User, error) {
 	user := User{}
 
-	result := dsd.Db.Table("public.user").Preload("Hackathons").First(&user, "user_id = ?", id)
+	result := dsd.Db.Table("public.user").Preload("Hackathons").First(&user, "id = ?", id)
 
 	if result.Error != nil {
 		log.Println("error on get data from user", result.Error)
