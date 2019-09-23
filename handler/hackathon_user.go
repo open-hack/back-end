@@ -69,3 +69,62 @@ func (as *ApiServer) CreateHackathonUserHandle(w http.ResponseWriter, r *http.Re
 		return
 	}
 }
+
+func (as *ApiServer) CreateByUserIDHandle(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	userID, _ := strconv.ParseInt(id, 10, 64)
+
+	//Leitura do body da requisição
+	b, err := ioutil.ReadAll(r.Body)
+	defer r.Body.Close()
+	if err != nil {
+		log.Println("Error on getting body content", err)
+		http.Error(w, "Error on getting body content", 500)
+		return
+	}
+
+	var hackathonIDs []int64
+	err = json.Unmarshal(b, &hackathonIDs)
+	if err != nil {
+		log.Println("Error on unmarshal info from body", err)
+		http.Error(w, "Error on unmarshal info from body", 500)
+		return
+	}
+
+	if err := as.DB.CreateByUserID(userID, hackathonIDs); err != nil {
+		log.Println("error on create hackathonUser data", err)
+		http.Error(w, "Error on unmarshal info from body", 500)
+		return
+	}
+}
+
+func (as *ApiServer) CreateByHackathonIDHandle(w http.ResponseWriter, r *http.Request) {
+
+	vars := mux.Vars(r)
+	id := vars["id"]
+	hackathonID, _ := strconv.ParseInt(id, 10, 64)
+
+	//Leitura do body da requisição
+	b, err := ioutil.ReadAll(r.Body)
+	defer r.Body.Close()
+	if err != nil {
+		log.Println("Error on getting body content", err)
+		http.Error(w, "Error on getting body content", 500)
+		return
+	}
+
+	var userIDs []int64
+	err = json.Unmarshal(b, &userIDs)
+	if err != nil {
+		log.Println("Error on unmarshal info from body", err)
+		http.Error(w, "Error on unmarshal info from body", 500)
+		return
+	}
+
+	if err := as.DB.CreateByHackathonID(hackathonID, userIDs); err != nil {
+		log.Println("error on create hackathonUser data", err)
+		http.Error(w, "Error on unmarshal info from body", 500)
+		return
+	}
+}

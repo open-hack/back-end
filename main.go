@@ -61,6 +61,8 @@ func main() {
 
 	//Rotas de criação
 	routes.HandleFunc("/api/hackathonUser", apiServer.CreateUserHandle).Methods("POST")
+	routes.HandleFunc("/api/hackathonUser/user/{id:[0-9]+}", apiServer.CreateByUserIDHandle).Methods("POST")
+	routes.HandleFunc("/api/hackathonUser/hackathon/{id:[0-9]+}", apiServer.CreateByHackathonIDHandle).Methods("POST")
 
 	routes.HandleFunc("/api/hackathon", apiServer.CreateUserHandle).Methods("POST")
 

@@ -3,10 +3,10 @@ package model
 import "log"
 
 type HackathonUser struct {
-	ID        int64     `gorm:"column:hackathon_user_id" json:"id,omitempty"`
-	State     string    `gorm:"column:hackathon_state" json:"hackathonState,omitempty"`
-	Hackathon Hackathon `gorm:"column:hackathon_id" json:"hackathonId,omitempty"`
-	User      User      `gorm:"column:user_id" json:"userId,omitempty"`
+	ID          int64  `gorm:"column:hackathon_user_id" json:"id,omitempty"`
+	State       string `gorm:"column:hackathon_state" json:"hackathonState,omitempty"`
+	HackathonID int64  `gorm:"column:hackathon_id" json:"hackathonId,omitempty"`
+	UserID      int64  `gorm:"column:user_id" json:"userId,omitempty"`
 }
 
 //CreateHackathonUser: criar associação de hackathon e hackathoner
@@ -15,6 +15,39 @@ func (dsd *WeeHackDB) CreateHackathonUser(hackathonUser *HackathonUser) error {
 	if result.Error != nil {
 		return result.Error
 	}
+	return nil
+}
+
+//CreateHackathonUser: criar associação de hackathon e hackathoner
+func (dsd *WeeHackDB) CreateByUserID(userID int64, hackathonIDs []int64) error {
+
+	for _, hackathonID := range hackathonIDs {
+
+		hackathonUser := &HackathonUser{
+			HackathonID: hackathonID,
+			UserID:      userID,
+			State:       "Open",
+		}
+
+		dsd.CreateHackathonUser(hackathonUser)
+	}
+	return nil
+}
+
+//CreateHackathonUser: criar associação de hackathon e hackathoner
+func (dsd *WeeHackDB) CreateByHackathonID(hackathonID int64, userIDs []int64) error {
+
+	for _, userID := range userIDs {
+
+		hackathonUser := &HackathonUser{
+			HackathonID: hackathonID,
+			UserID:      userID,
+			State:       "Open",
+		}
+
+		dsd.CreateHackathonUser(hackathonUser)
+	}
+
 	return nil
 }
 
