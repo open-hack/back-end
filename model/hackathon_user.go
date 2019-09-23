@@ -3,10 +3,10 @@ package model
 import "log"
 
 type HackathonUser struct {
-	ID          int64  `gorm:"column:hackathon_user_id" json:"id,omitempty"`
-	State       string `gorm:"column:hackathon_state" json:"hackathonState,omitempty"`
-	HackathonID int64  `gorm:"column:hackathon_id" json:"hackathonId,omitempty"`
-	USerID      int64  `gorm:"column:user_id" json:"userId,omitempty"`
+	ID        int64     `gorm:"column:hackathon_user_id" json:"id,omitempty"`
+	State     string    `gorm:"column:hackathon_state" json:"hackathonState,omitempty"`
+	Hackathon Hackathon `gorm:"column:hackathon_id" json:"hackathonId,omitempty"`
+	User      User      `gorm:"column:user_id" json:"userId,omitempty"`
 }
 
 //CreateHackathonUser: criar associação de hackathon e hackathoner
@@ -31,7 +31,7 @@ func (dsd *WeeHackDB) GetHackathonUser(id int) (*HackathonUser, error) {
 
 //GetUsers: retorna todos os hackathon
 func (dsd *WeeHackDB) GetAllHackathonUsers() (*[]HackathonUser, error) {
-	var hackathonUsers []HackathonUser
+	hackathonUsers := []HackathonUser{}
 	result := dsd.Db.Table("public.hackathon").Find(&hackathonUsers)
 	if result.Error != nil {
 		log.Println("error on get data from hackathonUser", result.Error)

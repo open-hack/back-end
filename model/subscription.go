@@ -3,8 +3,8 @@ package model
 import "log"
 
 type Subscription struct {
-	ID                 int64  `gorm:"column:subscription_id" json:"id,omitempty"`
-	UserID             int64  `gorm:"column:user_id" json:"userId,omitempty"`
+	ID                 int64 `gorm:"column:subscription_id" json:"id,omitempty"`
+	User               User
 	CPF                string `gorm:"column:cpf" json:"cpf,omitempty"`
 	RG                 string `gorm:"column:rg" json:"rg,omitempty"`
 	Telephone          string `gorm:"column:telephone" json:"telephone,omitempty"`
@@ -59,7 +59,7 @@ func (dsd *WeeHackDB) GetSubscription(id int) (*Subscription, error) {
 
 //GetUsers: retorna todas as inscrições
 func (dsd *WeeHackDB) GetAllSubscriptions() (*[]Subscription, error) {
-	var subscriptions []Subscription
+	subscriptions := []Subscription{}
 	result := dsd.Db.Table("public.subscription").Find(&subscriptions)
 	if result.Error != nil {
 		log.Println("error on get data from subscription", result.Error)
