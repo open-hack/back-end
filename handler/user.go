@@ -11,10 +11,6 @@ import (
 	"github.com/open-hack/back-end/model"
 )
 
-type ApiServer struct {
-	DB model.WeeHackDB
-}
-
 func (as *ApiServer) GetUserHandle(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]

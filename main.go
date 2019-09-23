@@ -53,10 +53,25 @@ func main() {
 	}
 
 	//Rotas de consulta
+	routes.HandleFunc("/api/hackathonUser/{id:[0-9]+}", apiServer.GetHackathonUserHandle).Methods("GET")
+	routes.HandleFunc("/api/hackathonUser/all", apiServer.GetAllHackathonUsersHandle).Methods("GET")
+
+	routes.HandleFunc("/api/hackathon/{id:[0-9]+}", apiServer.GetHackathonHandle).Methods("GET")
+	routes.HandleFunc("/api/hackathon/all", apiServer.GetAllHackathonsHandle).Methods("GET")
+
+	routes.HandleFunc("/api/subscription/{id:[0-9]+}", apiServer.GetSubscriptionHandle).Methods("GET")
+	routes.HandleFunc("/api/subscription/all", apiServer.GetAllSubscriptionsHandle).Methods("GET")
+
 	routes.HandleFunc("/api/user/{id:[0-9]+}", apiServer.GetUserHandle).Methods("GET")
 	routes.HandleFunc("/api/user/all", apiServer.GetAllUsersHandle).Methods("GET")
 
 	//Rotas de criação
+	routes.HandleFunc("/api/hackathonUser", apiServer.CreateUserHandle).Methods("POST")
+
+	routes.HandleFunc("/api/hackathon", apiServer.CreateUserHandle).Methods("POST")
+
+	routes.HandleFunc("/api/subscription", apiServer.CreateUserHandle).Methods("POST")
+
 	routes.HandleFunc("/api/user", apiServer.CreateUserHandle).Methods("POST")
 
 	http.Handle("/", routes)

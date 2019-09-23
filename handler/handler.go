@@ -18,6 +18,10 @@ type Handler struct {
 	Service  *service.ElasticService
 }
 
+type ApiServer struct {
+	DB model.WeeHackDB
+}
+
 func (h *Handler) SendViaPost(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "POST" {
