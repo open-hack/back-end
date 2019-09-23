@@ -16,6 +16,7 @@ type WeeHackDB struct {
 func (dsd *WeeHackDB) MustInit() {
 	var err error
 	dsd.Db, err = gorm.Open("postgres", Connection())
+	dsd.Db.LogMode(true)
 	if err != nil {
 		log.Println("error on connect database")
 		return
