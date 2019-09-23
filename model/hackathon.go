@@ -31,7 +31,7 @@ func (dsd *WeeHackDB) GetHackathon(id int) (*Hackathon, error) {
 		return nil, result.Error
 	} else {
 
-		dsd.Db.Model(&hackathon).Related(&users, "Users")
+		dsd.Db.Model(&hackathon).Related(&users, "User")
 		log.Println(users)
 		hackathon.Users = users
 	}
@@ -42,7 +42,7 @@ func (dsd *WeeHackDB) GetHackathon(id int) (*Hackathon, error) {
 func (dsd *WeeHackDB) GetAllHackathons() (*[]Hackathon, error) {
 	hackathons := []Hackathon{}
 
-	result := dsd.Db.Table("public.hackathon").Preload("Users").Find(&hackathons)
+	result := dsd.Db.Table("public.hackathon").Preload("User").Find(&hackathons)
 
 	log.Println(result)
 
