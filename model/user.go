@@ -8,7 +8,7 @@ import (
 )
 
 type User struct {
-	ID           uint        `gorm:"primary_key" json:"id,omitempty"`
+	ID           int64       `gorm:"primary_key" json:"id,omitempty"`
 	ProfileImage []byte      `gorm:"column:profile_image" json:"profileImage,omitempty"`
 	Username     string      `gorm:"column:username" json:"username,omitempty"`
 	Name         string      `gorm:"column:name" json:"name,omitempty"`
@@ -25,7 +25,7 @@ type User struct {
 	Profile      string      `gorm:"column:profile" json:"profile,omitempty"`
 	CreatedOn    time.Time   `gorm:"column:created_on" json:"created_on,omitempty"`
 	LastLogin    time.Time   `gorm:"column:last_login" json:"lastLogin,omitempty"`
-	Hackathons   []Hackathon `gorm:"many2many:hackathon_user;"`
+	Hackathons   []Hackathon `gorm:"many2many:hackathon_user; json:"hackathons,omitempty"`
 }
 
 //CreateUser: criar um usuário
