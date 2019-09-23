@@ -4,13 +4,11 @@ import (
 	"log"
 	"time"
 
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 type User struct {
-	gorm.Model
-	ID           int64       `gorm:"column:id;primary_key:true" json:"id,omitempty"`
+	ID           uint        `gorm:"primary_key" json:"id,omitempty"`
 	ProfileImage []byte      `gorm:"column:profile_image" json:"profileImage,omitempty"`
 	Username     string      `gorm:"column:username" json:"username,omitempty"`
 	Name         string      `gorm:"column:name" json:"name,omitempty"`
