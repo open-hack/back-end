@@ -52,22 +52,22 @@ func main() {
 		DB: db,
 	}
 
-	fs := http.FileServer(http.Dir("../public"))
-
 	//Rotas de consulta
-	routes.HandleFunc("/api/player/{id:[0-9]+}", apiServer.GetUserHandle).Methods("GET")
-	routes.HandleFunc("/api/player/all", apiServer.GetAllUsersHandle).Methods("GET")
+	routes.HandleFunc("/api/user/{id:[0-9]+}", apiServer.GetUserHandle).Methods("GET")
+	routes.HandleFunc("/api/user/all", apiServer.GetAllUsersHandle).Methods("GET")
 
 	//Rotas de criação
-	routes.HandleFunc("/api/player", apiServer.CreateUserHandle).Methods("POST")
+	routes.HandleFunc("/api/user", apiServer.CreateUserHandle).Methods("POST")
 
-	http.Handle("/", fs)
+	http.Handle("/", routes)
 	http.HandleFunc("/ws", chatHandler.HandleConnections)
 	http.HandleFunc("/sendMessage", chatHandler.SendViaPost)
 
 	go chatHandler.HandleMessages()
 
 	log.Println("http server started on " + os.Getenv("PORT"))
+	log.Println("database started on " + os.Getenv("DATABASE_URL"))
+	log.Println("bonsai started on " + os.Getenv("BONSAI_URL"))
 
 	error := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 	if error != nil {
