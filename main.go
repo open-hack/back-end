@@ -72,6 +72,9 @@ func main() {
 
 	routes.HandleFunc("/api/user", apiServer.CreateUserHandle).Methods("POST")
 
+	var dir string
+	routes.PathPrefix("/static/").Handler(http.StripPrefix("/", http.FileServer(http.Dir(dir))))
+
 	http.Handle("/", routes)
 	http.HandleFunc("/ws", chatHandler.HandleConnections)
 	http.HandleFunc("/sendMessage", chatHandler.SendViaPost)
