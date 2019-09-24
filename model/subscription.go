@@ -50,7 +50,7 @@ func (dsd *WeeHackDB) CreateSubscription(subscription *Subscription) error {
 func (dsd *WeeHackDB) GetSubscription(id int) (*Subscription, error) {
 	subscription := Subscription{}
 	result := dsd.Db.Table("public.subscriptions").Where("id = ?", id).First(&subscription)
-	if result.Error != nil {
+	if result.Error != nil && !result.RecordNotFound() {
 		log.Println("error on get data from subscription", result.Error)
 		return nil, result.Error
 	}

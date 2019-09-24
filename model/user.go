@@ -44,7 +44,7 @@ func (dsd *WeeHackDB) GetUser(id int) (*User, error) {
 
 	result := dsd.Db.Table("public.users").Preload("Subscription").Preload("Hackathons").First(&user, "id = ?", id)
 
-	if result.Error != nil {
+	if result.Error != nil && !result.RecordNotFound() {
 		log.Println("error on get data from user", result.Error)
 		return nil, result.Error
 	}

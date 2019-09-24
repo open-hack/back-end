@@ -26,7 +26,7 @@ func (dsd *WeeHackDB) GetHackathon(id int) (*Hackathon, error) {
 
 	result := dsd.Db.Table("public.hackathons").Preload("Users").First(&hackathon, "id = ?", id)
 
-	if result.Error != nil {
+	if result.Error != nil && !result.RecordNotFound() {
 		log.Println("error on get data from hackathon", result.Error)
 		return nil, result.Error
 	}
