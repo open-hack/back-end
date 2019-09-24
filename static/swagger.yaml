@@ -63,9 +63,7 @@ paths:
         format: "int64"
       responses:
         200:
-          content:
-            application/json:
-            schema: "#/definitions/User"
+          schema: "#/definitions/User"
           deion: "Success"
         500:
           deion: "Player not found"
@@ -101,9 +99,7 @@ paths:
       - "application/json"
       responses:
         200:
-          content:
-            application/json:
-            schema: "#/definitions/User"
+          schema: "#/definitions/User"
           deion: "Success"
         500:
           deion: "Player not found"
