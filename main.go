@@ -66,7 +66,7 @@ func main() {
 
 	routes.HandleFunc("/api/hackathon", apiServer.CreateHackathonHandle).Methods("POST")
 
-	routes.HandleFunc("/api/login", apiServer.LoginUserHandle).Methods("POST")
+	routes.HandleFunc("/api/login/{email}", apiServer.LoginUserHandle).Methods("POST")
 
 	routes.HandleFunc("/api/subscription", apiServer.CreateSubscriptionHandle).Methods("POST")
 
