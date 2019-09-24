@@ -7,7 +7,7 @@ This is a project for Shawee Open Hack. Please upvote us on Product Hunt!
 
 ### API Architecture
 <p align="center">
-![alt text](architecture.png)
+<img alt="API Architecture" src="https://github.com/open-hack/back-end/blob/master/architecture.png?raw=true" >
 </p>
 
 ### Documentation
