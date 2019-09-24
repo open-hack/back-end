@@ -269,6 +269,108 @@ paths:
           description: "Success"
         403:
           description: "not allowed"
+  /api/subscription/{id}:
+    get:
+      tags:
+      - "subscription"
+      summary: "Searches a Subscription"
+      x-code-samples:
+                  - lang: "curl"
+                    source: "curl -X GET \
+                               https://weebase-test.herokuapp.com/api/subscription/22 \
+                               -H 'Cache-Control: no-cache' \
+                               -H 'Postman-Token: c2d587d9-5fca-4adf-bd6f-9ae76d1abca6'"
+                  - lang: "java"
+                    source: "OkHttpClient client = new OkHttpClient();
+                             Request request = new Request.Builder()
+                               .url(\"https://weebase-test.herokuapp.com/api/subscription/22\")
+                               .get()
+                               .addHeader(\"Cache-Control\", \"no-cache\")
+                               .build();
+                             Response response = client.newCall(request).execute();"
+                  - lang: "python"
+                    source: "import requests
+                             url = \"https://weebase-test.herokuapp.com/api/subscription/22\"
+                             headers = {
+                                 'Cache-Control': \"no-cache\",
+                                 'Postman-Token': \"1c7a70b0-149a-4116-b876-1089c0a4dd1f\"
+                                 }
+                             response = requests.request(\"GET\", url, headers=headers)
+                             print(response.text)"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Subscription ID"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: '#/definitions/Subscription'
+        500:
+          description: "Subscription not found"
+  /api/subscription/all:
+    get:
+      tags:
+      - "subscription"
+      summary: "Gets all Subscriptions"
+      x-code-samples:
+                  - lang: "curl"
+                    source: "curl -X GET \
+                               https://weebase-test.herokuapp.com/api/subscription/all \
+                               -H 'Cache-Control: no-cache' \
+                               -H 'Postman-Token: c2d587d9-5fca-4adf-bd6f-9ae76d1abca6'"
+                  - lang: "java"
+                    source: "OkHttpClient client = new OkHttpClient();
+                             Request request = new Request.Builder()
+                               .url(\"https://weebase-test.herokuapp.com/api/subscription/all\")
+                               .get()
+                               .addHeader(\"Cache-Control\", \"no-cache\")
+                               .build();
+                             Response response = client.newCall(request).execute();"
+                  - lang: "python"
+                    source: "import requests
+                             url = \"https://weebase-test.herokuapp.com/api/subscription/all\"
+                             headers = {
+                                 'Cache-Control': \"no-cache\",
+                                 'Postman-Token': \"1c7a70b0-149a-4116-b876-1089c0a4dd1f\"
+                                 }
+                             response = requests.request(\"GET\", url, headers=headers)
+                             print(response.text)"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: '#/definitions/Subscription'
+        500:
+          description: "User not found"
+  /api/subscription:
+    post:
+      tags:
+      - "subscription"
+      summary: "Adds a new Subscription"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Subscription object to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Subscription"
+      responses:
+        200:
+          description: "Success"
+        500:
+          description: "not allowed"
   /api/hackathonUser/user/{id}:
     post:
       tags:
@@ -395,6 +497,79 @@ definitions:
     type: "array"
     items:
       type: "integer"
+  Subscription:
+    type: "object"
+    properties: 
+      id: 
+        type: "integer"
+        format: "int64"
+      userId:
+        type: "integer"
+        format: "int64"
+      cpf:
+        type: "string"
+      rg:
+        type: "string"
+      telephone:
+        type: "string"
+      state:
+        type: "string"
+      city:
+        type: "string"
+      address:
+        type: "string"
+      gender:
+        type: "string"
+      race:
+        type: "string"
+      university:
+        type: "string"
+      course:
+        type: "string"
+      graduationYear:
+        type: "string"
+      englishLevel:
+        type: "string"
+      deficiency:
+        type: "string"
+      foodRestriction:
+        type: "string"
+      allergy:
+        type: "string"
+      somethingImportant:
+        type: "string"
+      proudProject:
+        type: "string"
+      projectLinks:
+        type: "string"
+      hasBeenToHackathon:
+        type: "string"
+      hasBeenDescription:
+        type: "string"
+      profile:
+        type: "string"
+      howdidDiscover:
+        type: "string"
+      shirtSize:
+        type: "string"
+      agreement:
+        type: "string"
+      companyName:
+        type: "string"
+      isWorking:
+        type: "string"
+      habilityOneLevel:
+        type: "integer"
+        format: "int64"
+      habilityTwoLevel:
+        type: "integer"
+        format: "int64"
+      habilityThreeLevel:
+        type: "integer"
+        format: "int64"
+      habilityFourLevel:
+        type: "integer"
+        format: "int64"
 externalDocs:
   description: "Know more"
   url: "https://github.com/open-hack"
