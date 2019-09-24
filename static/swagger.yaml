@@ -145,6 +145,26 @@ paths:
       responses:
         200:
           description: "Success"
+        500:
+          description: "not allowed"
+  /api/login/{email}:
+    post:
+      tags:
+      - "user"
+      summary: "Login"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "email"
+        in: "path"
+        description: "User Email"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Success"
         403:
           description: "not allowed"
   /api/hackathon/{id}:
@@ -249,6 +269,60 @@ paths:
           description: "Success"
         403:
           description: "not allowed"
+  /api/hackathonUser/user/{id}:
+    post:
+      tags:
+      - "hackathonUser"
+      summary: "Relates Hackathons to a user"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "User ID"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Hackathon IDs"
+        required: true
+        schema:
+          $ref: "#/definitions/IDList"
+      responses:
+        200:
+          description: "Success"
+        403:
+          description: "not allowed"
+  /api/hackathonUser/hackathon/{id}:
+    post:
+      tags:
+      - "hackathonUser"
+      summary: "Relates Users to a Hackathon"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Hackathon ID"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "User IDs"
+        required: true
+        schema:
+          $ref: "#/definitions/IDList"
+      responses:
+        200:
+          description: "Success"
+        403:
+          description: "not allowed"
 definitions:
   User:
     type: "object"
@@ -317,6 +391,10 @@ definitions:
         format: "date-time"
       user: 
         type: "object"
+  IDList:
+    type: "array"
+    items:
+      type: "integer"
 externalDocs:
   description: "Know more"
   url: "https://github.com/open-hack"
