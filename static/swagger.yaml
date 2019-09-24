@@ -2,6 +2,8 @@ swagger: "2.0"
 info:
   description: "This is an example of Weebase backend API. Weebase is a tool that allows interaction between hackathon participants and assists sponsors in targeted marketing."
   version: "1.0.0"
+  x-logo:
+      url: 'logo.png'
   title: "Weebase API"
 host: "weebase-test.herokuapp.com"
 
@@ -61,7 +63,6 @@ paths:
         format: "int64"
       responses:
         200:
-          schema: "#/definitions/User"
           deion: "Success"
         500:
           deion: "Player not found"
@@ -97,7 +98,6 @@ paths:
       - "application/json"
       responses:
         200:
-          schema: "#/definitions/User"
           deion: "Success"
         500:
           deion: "Player not found"
