@@ -39,7 +39,7 @@ type Subscription struct {
 
 //CreateSubscription: criar uma inscrição
 func (dsd *WeeHackDB) CreateSubscription(subscription *Subscription) error {
-	result := dsd.Db.Table("public.subscription").Create(subscription)
+	result := dsd.Db.Table("public.subscriptions").Create(subscription)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -49,7 +49,7 @@ func (dsd *WeeHackDB) CreateSubscription(subscription *Subscription) error {
 //GetSubscription: retorna uma inscrição
 func (dsd *WeeHackDB) GetSubscription(id int) (*Subscription, error) {
 	subscription := Subscription{}
-	result := dsd.Db.Table("public.subscription").Where("id = ?", id).First(&subscription)
+	result := dsd.Db.Table("public.subscriptions").Where("id = ?", id).First(&subscription)
 	if result.Error != nil {
 		log.Println("error on get data from subscription", result.Error)
 		return nil, result.Error
@@ -60,7 +60,7 @@ func (dsd *WeeHackDB) GetSubscription(id int) (*Subscription, error) {
 //GetUsers: retorna todas as inscrições
 func (dsd *WeeHackDB) GetAllSubscriptions() (*[]Subscription, error) {
 	subscriptions := []Subscription{}
-	result := dsd.Db.Table("public.subscription").Find(&subscriptions)
+	result := dsd.Db.Table("public.subscriptions").Find(&subscriptions)
 	if result.Error != nil {
 		log.Println("error on get data from subscription", result.Error)
 		return nil, result.Error
