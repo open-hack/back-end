@@ -4,7 +4,7 @@ import "log"
 
 type Subscription struct {
 	ID                 int64  `gorm:"column:id;primary_key:true" json:"id,omitempty"`
-	UserID             int64  `gorm:"column:user_id" json:"userId,omitempty"`
+	UserID             int    `gorm:"column:user_id" json:"userId,omitempty"`
 	CPF                string `gorm:"column:cpf" json:"cpf,omitempty"`
 	RG                 string `gorm:"column:rg" json:"rg,omitempty"`
 	Telephone          string `gorm:"column:telephone" json:"telephone,omitempty"`
