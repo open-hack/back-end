@@ -12,6 +12,9 @@ import (
 )
 
 func (as *ApiServer) GetUserHandle(w http.ResponseWriter, r *http.Request) {
+
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	id := vars["id"]
 	idInt, _ := strconv.Atoi(id)
@@ -32,6 +35,8 @@ func (as *ApiServer) GetUserHandle(w http.ResponseWriter, r *http.Request) {
 
 func (as *ApiServer) GetAllUsersHandle(w http.ResponseWriter, r *http.Request) {
 
+	enableCors(&w)
+
 	users, err := as.DB.GetAllUsers()
 	if err != nil {
 		log.Println("error on get users", err)
@@ -47,6 +52,9 @@ func (as *ApiServer) GetAllUsersHandle(w http.ResponseWriter, r *http.Request) {
 }
 
 func (as *ApiServer) CreateUserHandle(w http.ResponseWriter, r *http.Request) {
+
+	enableCors(&w)
+
 	//Leitura do body da requisição
 	b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()

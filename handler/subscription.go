@@ -12,6 +12,9 @@ import (
 )
 
 func (as *ApiServer) GetSubscriptionHandle(w http.ResponseWriter, r *http.Request) {
+
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	id := vars["id"]
 	idInt, _ := strconv.Atoi(id)
@@ -32,6 +35,8 @@ func (as *ApiServer) GetSubscriptionHandle(w http.ResponseWriter, r *http.Reques
 
 func (as *ApiServer) GetAllSubscriptionsHandle(w http.ResponseWriter, r *http.Request) {
 
+	enableCors(&w)
+
 	subscriptions, err := as.DB.GetAllSubscriptions()
 	if err != nil {
 		log.Println("error on get subscriptions", err)
@@ -47,6 +52,9 @@ func (as *ApiServer) GetAllSubscriptionsHandle(w http.ResponseWriter, r *http.Re
 }
 
 func (as *ApiServer) CreateSubscriptionHandle(w http.ResponseWriter, r *http.Request) {
+
+	enableCors(&w)
+
 	//Leitura do body da requisição
 	b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()

@@ -12,6 +12,9 @@ import (
 )
 
 func (as *ApiServer) GetHackathonUserHandle(w http.ResponseWriter, r *http.Request) {
+
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	id := vars["id"]
 	idInt, _ := strconv.Atoi(id)
@@ -32,6 +35,8 @@ func (as *ApiServer) GetHackathonUserHandle(w http.ResponseWriter, r *http.Reque
 
 func (as *ApiServer) GetAllHackathonUsersHandle(w http.ResponseWriter, r *http.Request) {
 
+	enableCors(&w)
+
 	hackathonUsers, err := as.DB.GetAllHackathonUsers()
 	if err != nil {
 		log.Println("error on get hackathonUsers", err)
@@ -47,6 +52,9 @@ func (as *ApiServer) GetAllHackathonUsersHandle(w http.ResponseWriter, r *http.R
 }
 
 func (as *ApiServer) CreateHackathonUserHandle(w http.ResponseWriter, r *http.Request) {
+
+	enableCors(&w)
+
 	//Leitura do body da requisição
 	b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
@@ -71,6 +79,9 @@ func (as *ApiServer) CreateHackathonUserHandle(w http.ResponseWriter, r *http.Re
 }
 
 func (as *ApiServer) CreateByUserIDHandle(w http.ResponseWriter, r *http.Request) {
+
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	id := vars["id"]
 	userID, _ := strconv.ParseInt(id, 10, 64)
@@ -100,6 +111,8 @@ func (as *ApiServer) CreateByUserIDHandle(w http.ResponseWriter, r *http.Request
 }
 
 func (as *ApiServer) CreateByHackathonIDHandle(w http.ResponseWriter, r *http.Request) {
+
+	enableCors(&w)
 
 	vars := mux.Vars(r)
 	id := vars["id"]

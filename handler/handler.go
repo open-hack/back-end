@@ -24,6 +24,8 @@ type ApiServer struct {
 
 func (h *Handler) SendViaPost(w http.ResponseWriter, r *http.Request) {
 
+	enableCors(&w)
+
 	if r.Method == "POST" {
 
 		var payload model.Message
@@ -53,6 +55,8 @@ func (h *Handler) SendViaPost(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) HandleConnections(w http.ResponseWriter, r *http.Request) {
+
+	enableCors(&w)
 
 	ws, err := h.Upgrader.Upgrade(w, r, nil)
 	if err != nil {
@@ -103,4 +107,8 @@ func (h *Handler) HandleMessages() {
 			}
 		}
 	}
+}
+
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }

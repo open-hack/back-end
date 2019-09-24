@@ -12,6 +12,9 @@ import (
 )
 
 func (as *ApiServer) GetHackathonHandle(w http.ResponseWriter, r *http.Request) {
+
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	id := vars["id"]
 	idInt, _ := strconv.Atoi(id)
@@ -32,6 +35,8 @@ func (as *ApiServer) GetHackathonHandle(w http.ResponseWriter, r *http.Request) 
 
 func (as *ApiServer) GetAllHackathonsHandle(w http.ResponseWriter, r *http.Request) {
 
+	enableCors(&w)
+
 	hackathons, err := as.DB.GetAllHackathons()
 	if err != nil {
 		log.Println("error on get hackathons", err)
@@ -47,6 +52,9 @@ func (as *ApiServer) GetAllHackathonsHandle(w http.ResponseWriter, r *http.Reque
 }
 
 func (as *ApiServer) CreateHackathonHandle(w http.ResponseWriter, r *http.Request) {
+
+	enableCors(&w)
+
 	//Leitura do body da requisição
 	b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
