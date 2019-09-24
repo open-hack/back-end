@@ -3,7 +3,7 @@ info:
   deion: "This is an example of Weebase backend API. Weebase is a tool that allows interaction between hackathon participants and assists sponsors in targeted marketing."
   version: "1.0.0"
   x-logo:
-      url: 'https://lh3.googleusercontent.com/-syWODQ_dEJU/W13M2nAfRkI/AAAAAAAAAJs/ODDWwoJaOIEalmNAgvsk2kKwP8ooh1eAgCL0BGAYYCw/h15/_DATASPORT_.png'
+      url: '/weebase.png'
   title: "Weebase API"
 host: "weebase-test.herokuapp.com"
 
@@ -23,7 +23,6 @@ tags:
 
 schemes:
 - "https"
-- "http"
 paths:
   /api/user/{id}:
     get:
@@ -127,8 +126,8 @@ paths:
       responses:
         200:
           deion: "Success"
-        500:
-          deion: "User not found"
+        403:
+          deion: "not allowed"
   /shot/{id}:
     get:
       tags:
