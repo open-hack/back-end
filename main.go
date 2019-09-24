@@ -60,11 +60,13 @@ func main() {
 	routes.HandleFunc("/api/user/all", apiServer.GetAllUsersHandle).Methods("GET")
 
 	//Rotas de criação
-	routes.HandleFunc("/api/hackathonUser", apiServer.CreateUserHandle).Methods("POST")
+	routes.HandleFunc("/api/hackathonUser", apiServer.CreateHackathonUserHandle).Methods("POST")
 	routes.HandleFunc("/api/hackathonUser/user/{id:[0-9]+}", apiServer.CreateByUserIDHandle).Methods("POST")
 	routes.HandleFunc("/api/hackathonUser/hackathon/{id:[0-9]+}", apiServer.CreateByHackathonIDHandle).Methods("POST")
 
 	routes.HandleFunc("/api/hackathon", apiServer.CreateHackathonHandle).Methods("POST")
+
+	routes.HandleFunc("/api/login", apiServer.LoginUserHandle).Methods("POST")
 
 	routes.HandleFunc("/api/subscription", apiServer.CreateSubscriptionHandle).Methods("POST")
 
