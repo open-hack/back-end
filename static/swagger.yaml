@@ -11,7 +11,7 @@ host: "weebase-test.herokuapp.com"
 basePath: "/"
 tags:
 - name: "chat"
-  description: "broadcast a mensagem"
+  description: "broadcast a mensage"
 - name: "user"
   description: "information about users"
 - name: "hackathon"
@@ -19,7 +19,7 @@ tags:
 - name: "subscription"
   description: "information about subscriptions"
 - name: "hackathonUser"
-  description: "informationabout the relation between hackathons and hackathoners"
+  description: "information about the relation between hackathons and hackathoners"
 
 schemes:
 - "https"
@@ -85,6 +85,8 @@ paths:
       responses:
         200:
           description: "Success"
+          schema:
+            $ref: '#/definitions/User'
         500:
           description: "User not found"
   /api/user/all:
@@ -120,6 +122,8 @@ paths:
       responses:
         200:
           description: "Success"
+          schema:
+            $ref: '#/definitions/User'
         500:
           description: "User not found"
   /api/user:
@@ -183,6 +187,8 @@ paths:
       responses:
         200:
           description: "Success"
+          schema:
+            $ref: '#/definitions/Hackathon'
         500:
           description: "Hackathon not found"
   /api/hackathon/all:
@@ -218,6 +224,8 @@ paths:
       responses:
         200:
           description: "Success"
+          schema:
+            $ref: '#/definitions/Hackathon'
         500:
           description: "Hackathon not found"
   /api/hackathon:
