@@ -5,9 +5,10 @@ This is a project for Shawee Open Hack. Please upvote us on Product Hunt!
 <a href="https://www.producthunt.com/posts/weebase?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-weebase" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=168675&theme=light" alt="Weebase - A new way to management your hackathon together with sponsor | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px" /></a>
 </p>
 
-###API Architecture
+### API Architecture
 <p align="center">
-![alt text](https://github.com/open-hack/back-end/blob/master/architecture.png?raw=true)</p>
+![alt text](architecture.png)
+</p>
 
 ### Documentation
 
