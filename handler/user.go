@@ -51,6 +51,34 @@ func (as *ApiServer) GetAllUsersHandle(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (as *ApiServer) LoginUserHandle(w http.ResponseWriter, r *http.Request) {
+
+	enableCors(&w)
+
+	vars := mux.Vars(r)
+	email := vars["email"]
+
+	user, err := as.DB.GetUserByEmail(email)
+	if err != nil {
+		log.Println("error on get user", err)
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	userUpdated, error := as.DB.UpdateLastLogin(user)
+	if error != nil {
+		log.Println("error on get user", error)
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	if encodeErr := json.NewEncoder(w).Encode(userUpdated); encodeErr != nil {
+		log.Println("error encode user object", encodeErr)
+		http.Error(w, "internal server error", http.StatusInternalServerError)
+		return
+	}
+}
+
 func (as *ApiServer) CreateUserHandle(w http.ResponseWriter, r *http.Request) {
 
 	enableCors(&w)

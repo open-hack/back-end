@@ -51,6 +51,19 @@ func (dsd *WeeHackDB) GetUser(id int) (*User, error) {
 	return &user, nil
 }
 
+//GetUsers: retorna um usuário
+func (dsd *WeeHackDB) GetUserByEmail(email string) (*User, error) {
+	user := User{}
+
+	result := dsd.Db.Table("public.users").Preload("Subscription").Preload("Hackathons").First(&user, "email = ?", email)
+
+	if result.Error != nil && !result.RecordNotFound() {
+		log.Println("error on get data from user", result.Error)
+		return nil, result.Error
+	}
+	return &user, nil
+}
+
 //GetUsers: retorna todos os usuários
 func (dsd *WeeHackDB) GetAllUsers() (*[]User, error) {
 	users := []User{}
@@ -60,4 +73,17 @@ func (dsd *WeeHackDB) GetAllUsers() (*[]User, error) {
 		return nil, result.Error
 	}
 	return &users, nil
+}
+
+func (dsd *WeeHackDB) UpdateLastLogin(user *User) (*User, error) {
+
+	user.LastLogin = time.Now()
+
+	result := dsd.Db.Table("public.users").Save(&user)
+
+	if result.Error != nil {
+		log.Println("error on set data from user", result.Error)
+		return nil, result.Error
+	}
+	return user, nil
 }
