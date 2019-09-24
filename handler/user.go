@@ -51,6 +51,7 @@ func (as *ApiServer) GetAllUsersHandle(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// user login
 func (as *ApiServer) LoginUserHandle(w http.ResponseWriter, r *http.Request) {
 
 	enableCors(&w)
