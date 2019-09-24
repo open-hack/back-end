@@ -3,7 +3,7 @@ info:
   description: "This is an example of Weebase backend API. Weebase is a tool that allows interaction between hackathon participants and assists sponsors in targeted marketing."
   version: "1.0.0"
   x-logo:
-      url: 'weebase.png'
+      url: 'logo.png'
   title: "Weebase API"
 host: "weebase-test.herokuapp.com"
 
